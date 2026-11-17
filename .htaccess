@@ -1,0 +1,43 @@
+# Pinnawala Elephant Tour — Apache configuration
+# Safe to delete if the host does not use Apache.
+
+# ---------- Custom error page ----------
+ErrorDocument 404 /404.html
+
+# ---------- Force HTTPS (enable once the SSL certificate is installed) ----------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# ---------- Compression ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+    application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- Caching ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg      "access plus 1 year"
+  ExpiresByType image/png       "access plus 1 year"
+  ExpiresByType image/webp      "access plus 1 year"
+  ExpiresByType image/x-icon    "access plus 1 year"
+  ExpiresByType text/css        "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/html       "access plus 1 hour"
+</IfModule>
+
+# ---------- Basic security headers ----------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Make sure WebP is served with the right type on older hosts
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>

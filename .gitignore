@@ -1,0 +1,15 @@
+# The client's internal developer brief — not for publication
+Pinnawala_Elephant_Tour_Final_Developer_Brief.pdf
+
+# Original source photography and archives. These are the delivery master
+# copies kept on the developer's machine; the web-ready versions the site
+# actually uses live in media/.
+assets/
+*.zip
+
+# OS / editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
